@@ -2,6 +2,7 @@ language: node_js
 node_js:
   - 13
 before_script:
+  - chmod +x ./job.sh
   - npm install
   - npm run build
 script: ./job.sh
