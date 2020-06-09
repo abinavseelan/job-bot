@@ -74,7 +74,7 @@ export const generateSlackPayload = (positions: Array<Position>) => {
   });
 
   const frontendRoles = positions.filter((position) => {
-    return position.link.toLowerCase().indexOf('frontend') !== -1;
+    return position.text.toLowerCase().indexOf('frontend') !== -1;
   });
 
   frontendRoles.forEach((role) => {
@@ -108,7 +108,7 @@ export const generateSlackPayload = (positions: Array<Position>) => {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*${role.text}*\n*<${role.link}|Visit listing>*`,
+        text: `*${role.text}*\n*<https://www.atlassian.com/${role.link}|Visit listing>*`,
       },
     });
   });
