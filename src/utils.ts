@@ -90,7 +90,7 @@ export const generateSlackPayload = (positions: Array<Position>) => {
   });
 
   const otherRoles = positions.filter((position) => {
-    return position.link.toLowerCase().indexOf('frontend') === -1;
+    return position.text.toLowerCase().indexOf('frontend') === -1;
   });
 
   payload.blocks.push({
