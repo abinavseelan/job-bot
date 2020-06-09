@@ -1,3 +1,5 @@
+const BASE_URL = 'https://www.atlassian.com/';
+
 interface Position {
   link: string;
   text: string;
@@ -57,7 +59,7 @@ export const generateSlackPayload = (positions: Array<Position>) => {
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: `*<${process.env.TRAVIS_BUILD_WEB_URL}|View Job>*`,
+      text: `*<${process.env.TRAVIS_BUILD_WEB_URL}|View Travis Job>*`,
     },
   });
 
@@ -82,7 +84,7 @@ export const generateSlackPayload = (positions: Array<Position>) => {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*${role.text}*\n*<${role.link}|Visit listing>*`,
+        text: `*${role.text}*\n*<${BASE_URL}${role.link}|Visit listing>*`,
       },
     });
   });
@@ -108,7 +110,7 @@ export const generateSlackPayload = (positions: Array<Position>) => {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*${role.text}*\n*<https://www.atlassian.com/${role.link}|Visit listing>*`,
+        text: `*${role.text}*\n*<${BASE_URL}${role.link}|Visit listing>*`,
       },
     });
   });
