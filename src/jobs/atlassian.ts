@@ -6,13 +6,15 @@ const job = async () => {
     headless: true,
   });
   const page = await browser.newPage();
-  await page.goto('https://www.atlassian.com/company/careers/bengaluru', { waitUntil: 'networkidle0' });
+  await page.goto('https://www.atlassian.com/company/careers/bengaluru?team=Engineering&location=Bengaluru&search=', {
+    waitUntil: 'networkidle0',
+  });
 
   const positions = await page.evaluate(parseTable);
 
   await browser.close();
 
-  const payload = generateSlackPayload(positions);
+  const payload = generateSlackPayload('Atlassian', positions);
 
   return payload;
 };

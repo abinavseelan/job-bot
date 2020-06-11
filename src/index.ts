@@ -1,11 +1,12 @@
 import fetch from 'node-fetch';
 
 import Atlassian from './jobs/atlassian';
+import Uber from './jobs/uber';
 
 import { runner } from './utils';
 
 (async () => {
-  const results = await runner(Atlassian);
+  const results = await runner(Atlassian, Uber);
 
   results.forEach(async (result, index) => {
     if (result.status === 'rejected') {

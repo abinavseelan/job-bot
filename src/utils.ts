@@ -1,11 +1,11 @@
 const BASE_URL = 'https://www.atlassian.com/';
 
-interface Position {
+export interface JobPosition {
   link: string;
   text: string;
 }
 
-export const parseTable = (): Array<Position> => {
+export const parseTable = (): Array<JobPosition> => {
   const jobListingContainer = document.querySelector('div.careers');
 
   if (!jobListingContainer) {
@@ -32,7 +32,7 @@ export const parseTable = (): Array<Position> => {
   return result;
 };
 
-export const generateSlackPayload = (positions: Array<Position>) => {
+export const generateSlackPayload = (company: string, positions: Array<JobPosition>) => {
   const payload: { blocks: any } = {
     blocks: [],
   };
@@ -51,7 +51,7 @@ export const generateSlackPayload = (positions: Array<Position>) => {
     text: {
       type: 'plain_text',
       emoji: true,
-      text: 'Here are the Atlassian job listings for Bangalore this week.',
+      text: `Here are the "${company}" job listings this week.`,
     },
   });
 
@@ -76,7 +76,7 @@ export const generateSlackPayload = (positions: Array<Position>) => {
   });
 
   const frontendRoles = positions.filter((position) => {
-    return position.text.toLowerCase().indexOf('frontend') !== -1;
+    return position.text.toLowerCase().indexOf('frontend') !== -1 || position.text.match(/\bui\b/gi);
   });
 
   frontendRoles.forEach((role) => {
