@@ -14,10 +14,14 @@ import { runner } from './utils';
       return;
     }
 
-    await fetch(process.env.WEBHOOK_URL, {
-      method: 'post',
-      body: JSON.stringify(result.value),
-      headers: { 'Content-Type': 'application/json' },
-    });
+    if (process.env.WEBHOOK_URL) {
+      await fetch(process.env.WEBHOOK_URL, {
+        method: 'post',
+        body: JSON.stringify(result.value),
+        headers: { 'Content-Type': 'application/json' },
+      });
+    } else {
+      console.log(`[POST] ${JSON.stringify(result.value, null, 2)}`);
+    }
   });
 })();
