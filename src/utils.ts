@@ -117,3 +117,7 @@ export const generateSlackPayload = (positions: Array<Position>) => {
 
   return payload;
 };
+
+export const runner = async (...jobBots) => {
+  return Promise.allSettled([...jobBots.map((job) => job())]);
+};

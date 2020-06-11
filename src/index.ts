@@ -1,29 +1,23 @@
-import puppeteer from 'puppeteer';
 import fetch from 'node-fetch';
 
-import { parseTable, generateSlackPayload } from './utils';
+import Atlassian from './jobs/atlassian';
+
+import { runner } from './utils';
 
 (async () => {
-  try {
-    const browser = await puppeteer.launch({
-      headless: true,
-    });
-    const page = await browser.newPage();
-    await page.goto('https://www.atlassian.com/company/careers/bengaluru', { waitUntil: 'networkidle0' });
+  const results = await runner(Atlassian);
 
-    const positions = await page.evaluate(parseTable);
-
-    await browser.close();
-
-    const payload = generateSlackPayload(positions);
+  results.forEach(async (result, index) => {
+    if (result.status === 'rejected') {
+      console.error(`Job ${index + 1} failed`);
+      console.error(result.reason);
+      return;
+    }
 
     await fetch(process.env.WEBHOOK_URL, {
       method: 'post',
-      body: JSON.stringify(payload),
+      body: JSON.stringify(result.value),
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch (err) {
-    console.log(err);
-    process.exit(1);
-  }
+  });
 })();
