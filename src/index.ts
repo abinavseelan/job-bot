@@ -7,12 +7,11 @@ import { runner } from './utils';
 
 (async () => {
   const results = await runner(Atlassian, Uber);
-
-  results.forEach(async (result, index) => {
+  for (const [key, result] of Object.entries(results)) {
     if (result.status === 'rejected') {
-      console.error(`Job ${index + 1} failed`);
+      console.error(`Job ${key} failed`);
       console.error(result.reason);
-      return;
+      continue;
     }
 
     if (process.env.WEBHOOK_URL) {
@@ -24,5 +23,5 @@ import { runner } from './utils';
     } else {
       console.log(`[POST] ${JSON.stringify(result.value, null, 2)}`);
     }
-  });
+  }
 })();
