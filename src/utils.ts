@@ -1,5 +1,3 @@
-const BASE_URL = 'https://www.atlassian.com/';
-
 export interface JobPosition {
   link: string;
   text: string;
@@ -32,7 +30,7 @@ export const parseTable = (): Array<JobPosition> => {
   return result;
 };
 
-export const generateSlackPayload = (company: string, positions: Array<JobPosition>) => {
+export const generateSlackPayload = (company: string, positions: Array<JobPosition>, baseUrl: string) => {
   const payload: { blocks: any } = {
     blocks: [],
   };
@@ -84,7 +82,7 @@ export const generateSlackPayload = (company: string, positions: Array<JobPositi
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*${role.text}*\n*<${BASE_URL}${role.link}|Visit listing>*`,
+        text: `*${role.text}*\n*<${baseUrl}${role.link}|Visit listing>*`,
       },
     });
   });
@@ -110,7 +108,7 @@ export const generateSlackPayload = (company: string, positions: Array<JobPositi
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*${role.text}*\n*<${BASE_URL}${role.link}|Visit listing>*`,
+        text: `*${role.text}*\n*<${baseUrl}${role.link}|Visit listing>*`,
       },
     });
   });

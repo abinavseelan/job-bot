@@ -1,6 +1,8 @@
 import puppeteer from 'puppeteer';
 import { JobPosition, generateSlackPayload } from '../utils';
 
+const BASE_URL = 'https://www.uber.com/global/en';
+
 const evaluate = (): JobPosition[] => {
   const listings = Array.from(document.querySelectorAll<HTMLAnchorElement>('main a')).filter((i) =>
     i.getAttribute('href')?.startsWith('/careers')
@@ -27,7 +29,7 @@ const run = async () => {
 
   await browser.close();
 
-  return generateSlackPayload('Uber India', data);
+  return generateSlackPayload('Uber India', data, BASE_URL);
 };
 
 export default run;
