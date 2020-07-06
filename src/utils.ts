@@ -11,6 +11,10 @@ export const parseTable = (): Array<JobPosition> => {
   }
 
   const engineeringJobs = Array.from(jobListingContainer.children).find((child) => {
+    if (!child.children.length) {
+      return false;
+    }
+
     return child.children[0]?.innerHTML === 'Engineering';
   });
 
