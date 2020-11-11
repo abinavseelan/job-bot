@@ -8,7 +8,7 @@ const job = async () => {
     headless: true,
   });
   const page = await browser.newPage();
-  await page.goto('https://www.atlassian.com/company/careers/bengaluru?team=Engineering&location=Bengaluru&search=', {
+  await page.goto('https://www.atlassian.com/company/careers/all-jobs?team=&location=Bengaluru%2CRemote&search=', {
     waitUntil: 'networkidle0',
     timeout: 0,
   });
